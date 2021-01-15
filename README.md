@@ -1,4 +1,4 @@
-# Signal classification
+# Music Genre CLassification
 
 ## Task</br>
 Purpose of project is to classify genres of the given songs. </br>
