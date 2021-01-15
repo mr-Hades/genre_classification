@@ -1,61 +1,38 @@
-Task: Music Genre CLassification
-Data description:
-  Dataset : GTZAN (http://marsyas.info/downloads/datasets.html)
-  Target: music genre (10 classes in this case like rock, metal classical, e.t.c)
-  Data size: ex. 1.29 GB
-  Data structure: wav files
-  Experiments were run on a laptop having rtx 2060 (6gb) GPU
-  Features used are extracted from a signal using mfcc for lstm,
-                                                  aggregations of mfcc, spectral descriptors for SVM
-  
-
-Evaluation metrics: Accuracy.
-
 # Signal classification
 
 ## Task</br>
-Purpose of project is to classify differnet signal modulations. </br>
+Purpose of project is to classify genres of the given songs. </br>
 
 ## Dataset</br>
-I used public signal dataset 2016.10A, which is available in https://www.deepsig.ai/datasets.</br>
-Targer classes are: 
-'8PSK'
-'AM-DSB'
-'BPSK'
-'CPFSK'
-'GFSK'
-'PAM4'
-'QAM16'
-'QAM64'
-'QPSK'
-'WBFM'
+I used public signal dataset GTZAN, which is available in http://marsyas.info/downloads/datasets.html.</br>
+Target classes are music genres (10 classes in this case like rock, metal classical, e.t.c) 
 </br>
-Data contains sequance of integers which desicribes our signal.</br>
-Size is about 1.16G </br>
-Input shape is (2, 128) </br>
-
-Most of reaseach papers over this dataset are doing without any feature engineearing.
-## Method </br>
-CNN architecture is from  https://arxiv.org/pdf/1602.04105.pdf
+Data contains sequance of integers which desicribes our signal. Data contains wav files of about 30 sec long, 100 for each genre.</br>
+Size is about 1.29G </br>
 
 ## Feature engineearing </br>
-In code there are two feature engineearing techniques,but best one performed raw data </br>
-## Evaluation</br>
-Architecture in paper was used without batch normalization trick. In my experiment I also added batch normalization before each activation function(right plot). See result in picture.</br>
-NOTE: Images were ploted over test dataset.</br>
-### SNR</br>
-![Test Image 1](snr_formula.png) </br>
-SNR is ratio between Power of signal and noise in decibels scale </br>
-![Test Image 1](snr_db.png) </br></br></br>
-![Test Image 1](snr.png)
-![Test Image 2](batch_snr.png)</br></br>
+Mfcc and spectral descriptors are used in the models.
+
+## Experiment</br>
+2 differrent approaches were tried. 
+  SVM + PCA on mfcc and spectral descriptors aggregations (like mean std skewness e.t.c)
+  LSTM on mfcc </br>
+
+## Test data
+I used test data that was found from the dataset by random sampling with 0.25 coef.
+
+## Results
+F1 score was used as a metric.
+LSTM - train - 99% test-57 %
+PCA + SVM - train - 97% test-70 %
 
 ## Run
 
-For using ipython notebook you can download it and run through google colab, as computational resourseas are required.</br>
-For each model (without and with batch norm) it require about 2 hours to train.
-Ipython notebook contains script for downloading dataset.
+All steps to run are implemented in the given notbooks.
 
-www.deepsig.ai (https://www.deepsig.ai/datasets)
-RF Datasets For Machine Learning | DeepSig
-DeepSig has created RF datasets to aid in machine learning. These datasets can be used for original and reproducible research and experimentation.
+## Summary
+The main reason for the overfitting and low scores on the test data is that dataset is pretty small for the given task.
+
+## Future work.
+Try same approaches on a bigger and cleaner dataset.
+
